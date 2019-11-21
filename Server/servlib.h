@@ -12,6 +12,7 @@ void setTimeStartListen();
 void daemonize();
 void countHostname();
 char* messageOfError(int);
+char* createMessageResponse(char*);
 void showMessage(char*);
 
 #endif

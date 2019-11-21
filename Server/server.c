@@ -114,9 +114,6 @@ int main(int argc, char **argv) {
 		//receive message from server
 		memset(&buffer, '\0', sizeof(buffer));
 		read(newSocket, buffer, 1024);
-		if (daemonMode == 0) {		
-			printf("Required hostname: %s\n", buffer);
-		}
 		countHostname();
 		
 		// Create a new proccess
@@ -124,11 +121,12 @@ int main(int argc, char **argv) {
 		if (pid < 0) {
 			showMessage(messageOfError(errno));
 			exit(1);
-		} else if (pid == 0) {
+		} else if (pid == 0) {			
+			message = getIP(buffer);
 			sleep(waitTime);
 			// send the response
-			message = getIP(buffer);
 			send(newSocket, message, strlen(message), 0);
+			showMessage(createMessageResponse(buffer));
 			exit(1);
 		}
 	}

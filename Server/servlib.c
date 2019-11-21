@@ -34,10 +34,7 @@ void daemonize() {
 	if (pid > 0) { // child can continue to run even after the parent has finished executing
 		exit(1);
 	}
-	// Change the file mode mask
-	/* Its used to set file permissions. umask(0) means you have full read, write, execute access.. */
-	//umask(0);
-
+	// create new session
 	sid = setsid();
 	if (sid < 0) {
 		exit(1);
@@ -96,11 +93,26 @@ void countHostname() {
 	hostnameCount++;
 }
 
+// Create message of catch hostname from client
+char* createMessageCatchHostname(char* hostname) {
+	char* message = (char *) calloc(100, sizeof(char));
+	sprintf(message, "Hostname is required: %s\n", hostname);
+	return message;
+}
+
+// Create message of response to client
+char* createMessageResponse(char* hostname) {
+	char* message = (char *) calloc(100, sizeof(char));
+	sprintf(message, "Complete response of hostname %s\n", hostname);
+	return message;
+}
+
 // Get list of IP addresses of hostname
 char* getIP(char* host) {
 	char *listIP = (char*) calloc(1024, sizeof(char*));
 	struct hostent *hostEntry;
 	
+	showMessage(createMessageCatchHostname(host));
 	// To retrieve host information
 	hostEntry = gethostbyname(host);
 	if (hostEntry == NULL) {
@@ -186,6 +198,10 @@ void signalHandler(int sig) {
 // Create logfile and save name of logfile to logfilename.txt
 void createLogfile(char* logfileName) {
 	FILE* fp = fopen(logfileName, "w");
+	if (fp == NULL) {
+		printf("ERROR %d: %s\n", errno, strerror(errno));
+		exit(1);
+	}
 	fclose(fp);
 	logfile = logfileName;
 }

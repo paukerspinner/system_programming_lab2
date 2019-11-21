@@ -60,8 +60,6 @@ int main(int argc, char **argv) {
 		exit(1); 
 	} 
 
-	// request to send datagram 
-	// no need to specify server address in sendto 
 	// connect stores the peers IP and port 
 	send(sockfd, required_host, strlen(required_host), 0);
 	

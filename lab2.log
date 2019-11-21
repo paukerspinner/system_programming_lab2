@@ -1,0 +1,8 @@
+21.10.2019 14:36:44 Hostname is required: google.com
+21.10.2019 14:36:44 Complete response of hostname google.com
+21.10.2019 14:37:25 Hostname is required: goo
+21.10.2019 14:37:25 ERROR 1: Unknown host
+21.10.2019 14:37:25 Complete response of hostname goo
+21.10.2019 14:38:02 Time working: 00h01m54s
+21.10.2019 14:38:02 Number of required hostname: 2
+21.10.2019 14:38:09 Received SIGINT
